@@ -27,6 +27,16 @@ class List {
 
   public:
     /// <summary>
+    /// Constructor de la clase List
+    /// </summary>
+    List() = default;
+
+    /// <summary>
+    /// Destructor de la clase List
+    /// </summary>
+    ~List() { Clear(); }
+
+    /// <summary>
     /// Agrega un elemento al FINAL de la lista
     /// </summary>
     /// <param name="item">Elemento a agregar</param>

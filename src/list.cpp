@@ -35,7 +35,6 @@ bool List::Contains(int item) {
     Node *node = header;
     while (node) {
         if (node->data == item) return true;
-
         node = node->next;
     }
     return false;
@@ -46,7 +45,6 @@ int List::IndexOf(int item) {
     Node *node = header;
     while (node) {
         if (node->data == item) return i;
-
         node = node->next;
         i++;
     }
@@ -54,23 +52,15 @@ int List::IndexOf(int item) {
 }
 
 void List::Insert(int index, int item) {
-    Node *prev = nullptr;
-    Node *curr = header;
-    while (curr && index > 0) {
-        prev = curr;
-        curr = curr->next;
+    Node **node = &header;
+    while (*node && index > 0) {
         index--;
+        node = &(*node)->next;
     }
 
-    // Validar que el índice sea válido
     if (index != 0) throw std::out_of_range("index out of range");
 
-    Node *newNode = new Node{item, curr};
-    if (!prev) {
-        header = newNode;
-    } else {
-        prev->next = newNode;
-    }
+    *node = new Node{item, *node};
 }
 
 int List::GetItem(int index) {
@@ -110,44 +100,30 @@ int List::LastIndexOf(int item) {
 }
 
 bool List::Remove(int item) {
-    Node *prev = nullptr;
-    Node *curr = header;
-    while (curr && curr->data != item) {
-        prev = curr;
-        curr = curr->next;
+    Node **node = &header;
+    while (*node && (*node)->data != item) {
+
+        node = &(*node)->next;
     }
 
-    // Validar que el elemento exista en la lista
-    if (!curr) return false;
+    if (!*node) return false;
 
-    if (!prev) {
-        header = header->next;
-        delete curr;
-    } else {
-        prev->next = curr->next;
-        delete curr;
-    }
+    Node *del = *node;
+    *node = (*node)->next;
+    delete del;
     return true;
 }
 
 void List::RemoveAt(int index) {
-    Node *prev = nullptr;
-    Node *curr = header;
-    while (curr && index > 0) {
-        prev = curr;
-        curr = curr->next;
+    Node **node = &header;
+    while (*node && index > 0) {
         index--;
+        node = &((*node)->next);
     }
 
-    // Validar que el indice sea valido
-    if (!curr || index != 0 || !header)
-        throw std::out_of_range("index out of range");
+    if (index != 0 || !*node) throw std::out_of_range("index out of range");
 
-    if (!prev) {
-        header = header->next;
-        delete curr;
-    } else {
-        prev->next = curr->next;
-        delete curr;
-    }
+    Node *del = *node;
+    *node = (*node)->next;
+    delete del;
 }
