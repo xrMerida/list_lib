@@ -2,15 +2,11 @@
 #include <stdexcept>
 
 void List::Add(int item) {
-    Node *newNode = new Node{item, nullptr};
-
-    if (header) {
-        Node *node = header;
-        while (node->next) node = node->next;
-        node->next = newNode;
-    } else {
-        header = newNode;
+    Node **node = &header;
+    while (*node) {
+        node = &(*node)->next;
     }
+    *node = new Node{item, *node};
 }
 
 void List::Clear() {

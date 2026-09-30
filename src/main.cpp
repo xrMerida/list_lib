@@ -51,7 +51,7 @@ void testOutOfRange(auto operation) {
     throw std::runtime_error("Test failed");
 }
 
-int main() {
+void runTests() {
     List l;
     cout << "====< List Test Suit >====" << '\n';
     cout << "\nTest Add, GetItem and Count" << '\n';
@@ -325,4 +325,25 @@ int main() {
     showList(l);
 
     cout << "\n====< " << passed << " tests passed >====" << '\n';
+}
+
+int main() {
+    List lista;
+
+    lista.Add(2);
+    lista.Add(30);
+
+    cout << "Cantidad de objetos: " << lista.Count() << endl;
+
+    lista.Insert(0, 10);
+    lista.Insert(1, 15);
+
+    cout << "Cantidad de objetos: " << lista.Count() << endl;
+
+    lista.RemoveAt(2);
+
+    cout << "Elementos en la lista:\n";
+    for (int i = 0; i < lista.Count(); ++i) {
+        cout << "- " << lista.GetItem(i) << "\n";
+    }
 }
