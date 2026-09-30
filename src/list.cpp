@@ -2,11 +2,11 @@
 #include <stdexcept>
 
 void List::Add(int item) {
-    Node **node = &header;
-    while (*node) {
-        node = &(*node)->next;
+    Node **link = &header;
+    while (*link) {
+        link = &(*link)->next;
     }
-    *node = new Node{item, *node};
+    *link = new Node{item, *link};
 }
 
 void List::Clear() {
@@ -48,15 +48,15 @@ int List::IndexOf(int item) {
 }
 
 void List::Insert(int index, int item) {
-    Node **node = &header;
-    while (*node && index > 0) {
+    Node **link = &header;
+    while (*link && index > 0) {
         index--;
-        node = &(*node)->next;
+        link = &(*link)->next;
     }
 
     if (index != 0) throw std::out_of_range("index out of range");
 
-    *node = new Node{item, *node};
+    *link = new Node{item, *link};
 }
 
 int List::GetItem(int index) {
@@ -96,30 +96,30 @@ int List::LastIndexOf(int item) {
 }
 
 bool List::Remove(int item) {
-    Node **node = &header;
-    while (*node && (*node)->data != item) {
+    Node **link = &header;
+    while (*link && (*link)->data != item) {
 
-        node = &(*node)->next;
+        link = &(*link)->next;
     }
 
-    if (!*node) return false;
+    if (!*link) return false;
 
-    Node *del = *node;
-    *node = (*node)->next;
+    Node *del = *link;
+    *link = (*link)->next;
     delete del;
     return true;
 }
 
 void List::RemoveAt(int index) {
-    Node **node = &header;
-    while (*node && index > 0) {
+    Node **link = &header;
+    while (*link && index > 0) {
         index--;
-        node = &((*node)->next);
+        link = &((*link)->next);
     }
 
-    if (index != 0 || !*node) throw std::out_of_range("index out of range");
+    if (index != 0 || !*link) throw std::out_of_range("index out of range");
 
-    Node *del = *node;
-    *node = (*node)->next;
+    Node *del = *link;
+    *link = (*link)->next;
     delete del;
 }
